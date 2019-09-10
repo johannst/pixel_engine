@@ -27,7 +27,7 @@ pub struct SpriteLines<'a> {
 impl<'a> Iterator for &'a mut SpriteLines<'_> {
     type Item = &'a [Pixel; 8];
     fn next(&mut self) -> Option<Self::Item> {
-        if self.line < 8 {
+        if self.line < self.sprite.lines.len() {
             self.line += 1;
             Some(&self.sprite.lines[self.line - 1])
         } else {
