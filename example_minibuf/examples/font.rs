@@ -6,8 +6,6 @@ const WIDTH: usize = 640;
 const HEIGHT: usize = 360;
 
 fn main() {
-    pixel_engine::say_hello();
-
     let mut window = Window::new(
         "Example - ESC to quit",
         WIDTH,
@@ -19,12 +17,11 @@ fn main() {
     });
 
     let mut buffer: Vec<u32> = vec![0; WIDTH * HEIGHT];
-    for l in 0..HEIGHT {
-        for c in 0..WIDTH {
-            if l < HEIGHT / 2 {
-                buffer[l * WIDTH + c] = 0x00ff_0000;
-            } else {
-                buffer[l * WIDTH + c] = 0x0000_ff00;
+
+    for (l, line) in pixel_engine::font::get_sprite('A').lines().enumerate() {
+        for (c, &pixel) in line.iter().enumerate() {
+            if pixel == pixel_engine::Pixel::C {
+                buffer[l * WIDTH + c] = 0x00ff_ffff;
             }
         }
     }
