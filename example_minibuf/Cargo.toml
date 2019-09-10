@@ -1,0 +1,10 @@
+[package]
+name = "example_minibuf"
+version = "0.0.0"
+authors = ["johannst <johannes.stoelp@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+pixel_engine = { path = "../", version = "*" }
+minifb = "0.13.0"
+
