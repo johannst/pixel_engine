@@ -1,6 +1,7 @@
 extern crate minifb;
-
 use minifb::{Key, Window, WindowOptions};
+
+use pixel_engine::PixelBuffer;
 
 const WIDTH: usize = 640;
 const HEIGHT: usize = 360;
@@ -16,29 +17,18 @@ fn main() {
         panic!("{}", e);
     });
 
-    let mut buffer: Vec<u32> = vec![0; WIDTH * HEIGHT];
-
-    let mut render = |x, letter| {
-        for (l, line) in pixel_engine::font::get_sprite(letter).lines().enumerate() {
-            for (c, &pixel) in line.iter().enumerate() {
-                if pixel == pixel_engine::Pixel::C {
-                    buffer[l * WIDTH + c + x] = 0x00ff_ffff;
-                }
-            }
+    let mut buf = pixel_engine::PixelVec::new(WIDTH, HEIGHT);
+    for y in 0..100 {
+        for x in 0..100 {
+            pixel_engine::draw_pixel(&mut buf, x, y, 0x00ffffff);
         }
-    };
-    render(0, 'D');
-    render(8, 'E');
-    render(16, 'A');
-    render(24, 'D');
-    render(32, 'B');
-    render(40, 'E');
-    render(48, 'E');
-    render(56, 'F');
+    }
+    pixel_engine::draw_sprite(&mut buf, 200, 200, pixel_engine::font::get_sprite('D'));
+    pixel_engine::draw_str(&mut buf, 100, 300, "DEADBEFF");
 
-    window.update_with_buffer(&buffer).unwrap();
-
+    window.update_with_buffer(buf.buffer()).unwrap();
     while window.is_open() && !window.is_key_down(Key::Escape) {
         window.update();
     }
 }
+
