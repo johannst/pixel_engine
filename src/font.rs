@@ -71,7 +71,7 @@ const SPRITE_F: Sprite = Sprite {
         [U, U, U, U, U, U, U, U],
         [U, C, C, C, C, C, C, U],
         [U, C, U, U, U, U, U, U],
-        [U, C, C, C, C, C, C, U],
+        [U, C, C, C, C, C, U, U],
         [U, C, U, U, U, U, U, U],
         [U, C, U, U, U, U, U, U],
         [U, C, U, U, U, U, U, U],
