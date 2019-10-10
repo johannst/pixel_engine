@@ -43,17 +43,17 @@ pub trait PixelBuffer {
 }
 
 pub struct PixelVec {
-    width : usize,
-    height : usize,
-    buffer : Vec<u32>,
+    width: usize,
+    height: usize,
+    buffer: Vec<u32>,
 }
 
 impl PixelVec {
-    pub fn new(width : usize, height: usize) -> PixelVec {
+    pub fn new(width: usize, height: usize) -> PixelVec {
         PixelVec {
             width,
             height,
-            buffer : vec![0; width * height],
+            buffer: vec![0; width * height],
         }
     }
 }
@@ -70,29 +70,95 @@ impl PixelBuffer for PixelVec {
     }
 }
 
-pub fn draw_pixel<T: PixelBuffer>(buf : &mut T, x : usize, y: usize, rgb : u32) {
+#[derive(Clone, Copy, Debug)]
+pub enum PixelScale {
+    X1,
+    X2,
+    X4,
+    X8,
+}
+
+fn get_scale_value(scale: PixelScale) -> usize {
+    match scale {
+        PixelScale::X1 => 1,
+        PixelScale::X2 => 2,
+        PixelScale::X4 => 4,
+        PixelScale::X8 => 8,
+        _ => {
+            unimplemented!();
+        }
+    }
+}
+
+pub fn draw_pixel_with_scale<T: PixelBuffer>(
+    buf: &mut T,
+    x: usize,
+    y: usize,
+    rgb: u32,
+    scale: PixelScale,
+) {
     assert!(x < buf.width());
     assert!(y < buf.height());
 
+    let scale = get_scale_value(scale);
+
     let width = buf.width();
-    buf.buffer()[ y * width + x] = rgb;
+    for l in 0..scale {
+        for c in 0..scale {
+            buf.buffer()[(y + l) * width + x + c] = rgb;
+        }
+    }
 }
 
-pub fn draw_sprite<T: PixelBuffer>(buf : &mut T, x : usize, y: usize, sprite : &Sprite) {
+pub fn draw_sprite_with_scale<T: PixelBuffer>(
+    buf: &mut T,
+    x: usize,
+    y: usize,
+    sprite: &Sprite,
+    scale: PixelScale,
+) {
+    let scale_val = get_scale_value(scale);
+
     for (l, pixel_line) in sprite.lines().enumerate() {
         for (c, &pixel) in pixel_line.iter().enumerate() {
             if pixel == Pixel::C {
-                draw_pixel(buf, x + c, y + l, 0x00ffffff);
+                draw_pixel_with_scale(
+                    buf,
+                    x + (c * scale_val),
+                    y + (l * scale_val),
+                    0x00ffffff,
+                    scale,
+                );
             }
         }
     }
 }
 
-pub fn draw_str<T: PixelBuffer>(buf : &mut T, x : usize, y: usize, string: &str) {
+pub fn draw_str_with_scale<T: PixelBuffer>(
+    buf: &mut T,
+    x: usize,
+    y: usize,
+    string: &str,
+    scale: PixelScale,
+) {
+    let scale_val = get_scale_value(scale);
+
     let mut x_off = 0;
     for c in string.chars() {
-        draw_sprite(buf, x + x_off, y, font::get_sprite(c));
-        x_off += 8;
+        draw_sprite_with_scale(buf, x + x_off, y, font::get_sprite(c), scale);
+        x_off += 8 * scale_val;
     }
 }
 
+// PixelScale::X1 convenience methods
+pub fn draw_pixel<T: PixelBuffer>(buf: &mut T, x: usize, y: usize, rgb: u32) {
+    draw_pixel_with_scale(buf, x, y, rgb, PixelScale::X1);
+}
+
+pub fn draw_sprite<T: PixelBuffer>(buf: &mut T, x: usize, y: usize, sprite: &Sprite) {
+    draw_sprite_with_scale(buf, x, y, sprite, PixelScale::X1);
+}
+
+pub fn draw_str<T: PixelBuffer>(buf: &mut T, x: usize, y: usize, string: &str) {
+    draw_str_with_scale(buf, x, y, string, PixelScale::X1);
+}

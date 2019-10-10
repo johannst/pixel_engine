@@ -24,11 +24,17 @@ fn main() {
         }
     }
     pixel_engine::draw_sprite(&mut buf, 200, 200, pixel_engine::font::get_sprite('D'));
-    pixel_engine::draw_str(&mut buf, 100, 300, "DEADBEFF");
+    pixel_engine::draw_str(&mut buf, 100, 300, "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+    pixel_engine::draw_str_with_scale(
+        &mut buf,
+        100,
+        330,
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+        pixel_engine::PixelScale::X2,
+    );
 
     window.update_with_buffer(buf.buffer()).unwrap();
     while window.is_open() && !window.is_key_down(Key::Escape) {
         window.update();
     }
 }
-

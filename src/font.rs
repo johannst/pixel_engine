@@ -79,6 +79,266 @@ const SPRITE_F: Sprite = Sprite {
     ],
 };
 
+const SPRITE_G: Sprite = Sprite {
+    lines: [
+        [U, U, U, U, U, U, U, U],
+        [U, C, C, C, C, C, C, U],
+        [U, C, U, U, U, U, U, U],
+        [U, C, U, U, U, U, U, U],
+        [U, C, U, U, C, C, C, U],
+        [U, C, U, U, U, U, C, U],
+        [U, C, C, C, C, C, C, U],
+        [U, U, U, U, U, U, U, U],
+    ],
+};
+
+const SPRITE_H: Sprite = Sprite {
+    lines: [
+        [U, U, U, U, U, U, U, U],
+        [U, C, U, U, U, U, C, U],
+        [U, C, U, U, U, U, C, U],
+        [U, C, U, U, U, U, C, U],
+        [U, C, C, C, C, C, C, U],
+        [U, C, U, U, U, U, C, U],
+        [U, C, U, U, U, U, C, U],
+        [U, U, U, U, U, U, U, U],
+    ],
+};
+
+const SPRITE_I: Sprite = Sprite {
+    lines: [
+        [U, U, U, U, U, U, U, U],
+        [U, C, C, C, C, C, U, U],
+        [U, U, U, C, U, U, U, U],
+        [U, U, U, C, U, U, U, U],
+        [U, U, U, C, U, U, U, U],
+        [U, U, U, C, U, U, U, U],
+        [U, C, C, C, C, C, U, U],
+        [U, U, U, U, U, U, U, U],
+    ],
+};
+
+const SPRITE_J: Sprite = Sprite {
+    lines: [
+        [U, U, U, U, U, U, U, U],
+        [U, C, C, C, C, C, U, U],
+        [U, U, U, U, C, U, U, U],
+        [U, U, U, U, C, U, U, U],
+        [U, U, U, U, C, U, U, U],
+        [U, C, U, U, C, U, U, U],
+        [U, C, C, C, C, U, U, U],
+        [U, U, U, U, U, U, U, U],
+    ],
+};
+
+const SPRITE_K: Sprite = Sprite {
+    lines: [
+        [U, U, U, U, U, U, U, U],
+        [U, C, U, U, U, C, U, U],
+        [U, C, U, U, U, C, U, U],
+        [U, C, C, C, C, U, U, U],
+        [U, C, U, U, U, C, U, U],
+        [U, C, U, U, U, C, U, U],
+        [U, C, U, U, U, C, U, U],
+        [U, U, U, U, U, U, U, U],
+    ],
+};
+
+const SPRITE_L: Sprite = Sprite {
+    lines: [
+        [U, U, U, U, U, U, U, U],
+        [U, C, U, U, U, U, U, U],
+        [U, C, U, U, U, U, U, U],
+        [U, C, U, U, U, U, U, U],
+        [U, C, U, U, U, U, U, U],
+        [U, C, U, U, U, U, U, U],
+        [U, C, C, C, C, C, U, U],
+        [U, U, U, U, U, U, U, U],
+    ],
+};
+
+const SPRITE_M: Sprite = Sprite {
+    lines: [
+        [U, U, U, U, U, U, U, U],
+        [U, C, U, U, U, C, U, U],
+        [U, C, C, U, C, C, U, U],
+        [U, C, U, C, U, C, U, U],
+        [U, C, U, U, U, C, U, U],
+        [U, C, U, U, U, C, U, U],
+        [U, C, U, U, U, C, U, U],
+        [U, U, U, U, U, U, U, U],
+    ],
+};
+
+const SPRITE_N: Sprite = Sprite {
+    lines: [
+        [U, U, U, U, U, U, U, U],
+        [U, C, U, U, U, U, C, U],
+        [U, C, C, U, U, U, C, U],
+        [U, C, U, C, U, U, C, U],
+        [U, C, U, U, C, U, C, U],
+        [U, C, U, U, U, C, C, U],
+        [U, C, U, U, U, U, C, U],
+        [U, U, U, U, U, U, U, U],
+    ],
+};
+
+const SPRITE_O: Sprite = Sprite {
+    lines: [
+        [U, U, U, U, U, U, U, U],
+        [U, C, C, C, C, C, C, U],
+        [U, C, U, U, U, U, C, U],
+        [U, C, U, U, U, U, C, U],
+        [U, C, U, U, U, U, C, U],
+        [U, C, U, U, U, U, C, U],
+        [U, C, C, C, C, C, C, U],
+        [U, U, U, U, U, U, U, U],
+    ],
+};
+
+const SPRITE_P: Sprite = Sprite {
+    lines: [
+        [U, U, U, U, U, U, U, U],
+        [U, C, C, C, C, C, U, U],
+        [U, C, U, U, U, U, C, U],
+        [U, C, C, C, C, C, U, U],
+        [U, C, U, U, U, U, U, U],
+        [U, C, U, U, U, U, U, U],
+        [U, C, U, U, U, U, U, U],
+        [U, U, U, U, U, U, U, U],
+    ],
+};
+
+const SPRITE_Q: Sprite = Sprite {
+    lines: [
+        [U, U, U, U, U, U, U, U],
+        [U, C, C, C, C, C, C, U],
+        [U, C, U, U, U, U, C, U],
+        [U, C, U, U, U, U, C, U],
+        [U, C, U, U, C, U, C, U],
+        [U, C, U, U, U, C, C, U],
+        [U, C, C, C, C, C, C, U],
+        [U, U, U, U, U, U, U, U],
+    ],
+};
+
+const SPRITE_R: Sprite = Sprite {
+    lines: [
+        [U, U, U, U, U, U, U, U],
+        [U, C, C, C, C, C, U, U],
+        [U, C, U, U, U, U, C, U],
+        [U, C, C, C, C, C, U, U],
+        [U, C, U, U, C, U, U, U],
+        [U, C, U, U, U, C, U, U],
+        [U, C, U, U, U, U, C, U],
+        [U, U, U, U, U, U, U, U],
+    ],
+};
+
+const SPRITE_S: Sprite = Sprite {
+    lines: [
+        [U, U, U, U, U, U, U, U],
+        [U, C, C, C, C, C, C, U],
+        [U, C, U, U, U, U, U, U],
+        [U, C, C, C, C, C, C, U],
+        [U, U, U, U, U, U, C, U],
+        [U, U, U, U, U, U, C, U],
+        [U, C, C, C, C, C, C, U],
+        [U, U, U, U, U, U, U, U],
+    ],
+};
+
+const SPRITE_T: Sprite = Sprite {
+    lines: [
+        [U, U, U, U, U, U, U, U],
+        [U, C, C, C, C, C, C, U],
+        [U, U, U, U, C, U, U, U],
+        [U, U, U, U, C, U, U, U],
+        [U, U, U, U, C, U, U, U],
+        [U, U, U, U, C, U, U, U],
+        [U, U, U, U, C, U, U, U],
+        [U, U, U, U, U, U, U, U],
+    ],
+};
+
+const SPRITE_U: Sprite = Sprite {
+    lines: [
+        [U, U, U, U, U, U, U, U],
+        [U, C, U, U, U, U, C, U],
+        [U, C, U, U, U, U, C, U],
+        [U, C, U, U, U, U, C, U],
+        [U, C, U, U, U, U, C, U],
+        [U, C, U, U, U, U, C, U],
+        [U, C, C, C, C, C, C, U],
+        [U, U, U, U, U, U, U, U],
+    ],
+};
+
+const SPRITE_V: Sprite = Sprite {
+    lines: [
+        [U, U, U, U, U, U, U, U],
+        [U, C, U, U, U, U, C, U],
+        [U, C, U, U, U, U, C, U],
+        [U, C, U, U, U, U, C, U],
+        [U, U, C, U, U, C, U, U],
+        [U, U, C, U, U, C, U, U],
+        [U, U, U, C, C, U, U, U],
+        [U, U, U, U, U, U, U, U],
+    ],
+};
+
+const SPRITE_W: Sprite = Sprite {
+    lines: [
+        [U, U, U, U, U, U, U, U],
+        [U, C, U, U, U, C, U, U],
+        [U, C, U, U, U, C, U, U],
+        [U, C, U, U, U, C, U, U],
+        [U, C, U, C, U, C, U, U],
+        [U, C, C, U, C, C, U, U],
+        [U, C, U, U, U, C, U, U],
+        [U, U, U, U, U, U, U, U],
+    ],
+};
+
+const SPRITE_X: Sprite = Sprite {
+    lines: [
+        [U, U, U, U, U, U, U, U],
+        [U, C, U, U, U, U, C, U],
+        [U, U, C, U, U, C, U, U],
+        [U, U, U, C, C, U, U, U],
+        [U, U, U, C, C, U, U, U],
+        [U, U, C, U, U, C, U, U],
+        [U, C, U, U, U, U, C, U],
+        [U, U, U, U, U, U, U, U],
+    ],
+};
+
+const SPRITE_Y: Sprite = Sprite {
+    lines: [
+        [U, U, U, U, U, U, U, U],
+        [U, C, U, U, U, C, U, U],
+        [U, U, C, U, C, U, U, U],
+        [U, U, U, C, U, U, U, U],
+        [U, U, U, C, U, U, U, U],
+        [U, U, U, C, U, U, U, U],
+        [U, U, U, C, U, U, U, U],
+        [U, U, U, U, U, U, U, U],
+    ],
+};
+
+const SPRITE_Z: Sprite = Sprite {
+    lines: [
+        [U, U, U, U, U, U, U, U],
+        [U, C, C, C, C, C, C, U],
+        [U, U, U, U, U, C, U, U],
+        [U, U, U, U, C, U, U, U],
+        [U, U, U, C, U, U, U, U],
+        [U, U, C, U, U, U, U, U],
+        [U, C, C, C, C, C, C, U],
+        [U, U, U, U, U, U, U, U],
+    ],
+};
+
 pub fn get_sprite(letter: char) -> &'static Sprite {
     match letter {
         'A' => &SPRITE_A,
@@ -87,7 +347,28 @@ pub fn get_sprite(letter: char) -> &'static Sprite {
         'D' => &SPRITE_D,
         'E' => &SPRITE_E,
         'F' => &SPRITE_F,
+        'G' => &SPRITE_G,
+        'H' => &SPRITE_H,
+        'I' => &SPRITE_I,
+        'J' => &SPRITE_J,
+        'K' => &SPRITE_K,
+        'L' => &SPRITE_L,
+        'M' => &SPRITE_M,
+        'N' => &SPRITE_N,
+        'O' => &SPRITE_O,
+        'P' => &SPRITE_P,
+        'Q' => &SPRITE_Q,
+        'R' => &SPRITE_R,
+        'S' => &SPRITE_S,
+        'T' => &SPRITE_T,
+        'U' => &SPRITE_U,
+        'V' => &SPRITE_V,
+        'W' => &SPRITE_W,
+        'X' => &SPRITE_X,
+        'Y' => &SPRITE_Y,
+        'Z' => &SPRITE_Z,
         _ => {
+            dbg!(letter);
             unimplemented!();
         }
     }
