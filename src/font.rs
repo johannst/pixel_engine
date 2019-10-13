@@ -365,6 +365,32 @@ const SPRITE_COMMA: Sprite = Sprite {
     ],
 };
 
+const SPRITE_COLON: Sprite = Sprite {
+    lines: [
+        [U, U, U, U, U, U, U, U],
+        [U, U, U, C, C, U, U, U],
+        [U, U, U, C, C, U, U, U],
+        [U, U, U, U, U, U, U, U],
+        [U, U, U, U, U, U, U, U],
+        [U, U, U, C, C, U, U, U],
+        [U, U, U, C, C, U, U, U],
+        [U, U, U, U, U, U, U, U],
+    ],
+};
+
+const SPRITE_DASH: Sprite = Sprite {
+    lines: [
+        [U, U, U, U, U, U, U, U],
+        [U, U, U, U, U, U, U, U],
+        [U, U, U, U, U, U, U, U],
+        [U, U, C, C, C, C, U, U],
+        [U, U, U, U, U, U, U, U],
+        [U, U, U, U, U, U, U, U],
+        [U, U, U, U, U, U, U, U],
+        [U, U, U, U, U, U, U, U],
+    ],
+};
+
 const SPRITE_0: Sprite = Sprite {
     lines: [
         [U, U, U, U, U, U, U, U],
@@ -551,6 +577,8 @@ pub fn get_sprite(letter: char) -> &'static Sprite {
         'Z' => &SPRITE_Z,
         ' ' => &SPRITE_SPACE,
         ',' => &SPRITE_COMMA,
+        ':' => &SPRITE_COLON,
+        '-' => &SPRITE_DASH,
         '0' => &SPRITE_0,
         '1' => &SPRITE_1,
         '2' => &SPRITE_2,
