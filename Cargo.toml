@@ -7,3 +7,4 @@ license = "MIT"
 repository = "https://github.com/johannst/pixel_engine.git"
 
 [dependencies]
+lazy_static = "1.*"
