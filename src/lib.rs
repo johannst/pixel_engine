@@ -1,5 +1,11 @@
+#![feature(const_generics)]
+#![feature(const_generic_impls_guard)]
+
 #[macro_use]
 extern crate lazy_static;
+
+// to get all benefits from rusts primitve array type we constrain our Sprite type to max of 32x32
+use std::array::LengthAtMost32;
 
 pub mod font;
 
@@ -9,12 +15,20 @@ pub enum Pixel {
     U,
 }
 
-pub struct Sprite {
-    lines: [[Pixel; 8]; 8],
+pub struct Sprite<const X: usize, const Y: usize>
+where
+    [Pixel; X]: LengthAtMost32,
+    [[Pixel; X]; Y]: LengthAtMost32,
+{
+    lines: [[Pixel; X]; Y],
 }
 
-impl Sprite {
-    pub fn lines(&self) -> SpriteLines<'_> {
+impl<const X: usize, const Y: usize> Sprite<{ X }, { Y }>
+where
+    [Pixel; X]: LengthAtMost32,
+    [[Pixel; X]; Y]: LengthAtMost32,
+{
+    pub fn lines(&self) -> SpriteLines<'_, { X }, { Y }> {
         SpriteLines {
             sprite: &self,
             line: 0,
@@ -22,13 +36,21 @@ impl Sprite {
     }
 }
 
-pub struct SpriteLines<'a> {
-    sprite: &'a Sprite,
+pub struct SpriteLines<'a, const X: usize, const Y: usize>
+where
+    [Pixel; X]: LengthAtMost32,
+    [[Pixel; X]; Y]: LengthAtMost32,
+{
+    sprite: &'a Sprite<{ X }, { Y }>,
     line: usize,
 }
 
-impl<'a> Iterator for &'a mut SpriteLines<'_> {
-    type Item = &'a [Pixel; 8];
+impl<'a, const X: usize, const Y: usize> Iterator for &'a mut SpriteLines<'_, { X }, { Y }>
+where
+    [Pixel; X]: LengthAtMost32,
+    [[Pixel; X]; Y]: LengthAtMost32,
+{
+    type Item = &'a [Pixel; X];
     fn next(&mut self) -> Option<Self::Item> {
         if self.line < self.sprite.lines.len() {
             self.line += 1;
@@ -113,13 +135,16 @@ pub fn draw_pixel_with_scale<T: PixelBuffer>(
     }
 }
 
-pub fn draw_sprite_with_scale<T: PixelBuffer>(
+pub fn draw_sprite_with_scale<T: PixelBuffer, const X: usize, const Y: usize>(
     buf: &mut T,
     x: usize,
     y: usize,
-    sprite: &Sprite,
+    sprite: &Sprite<{ X }, { Y }>,
     scale: PixelScale,
-) {
+) where
+    [Pixel; X]: LengthAtMost32,
+    [[Pixel; X]; Y]: LengthAtMost32,
+{
     let scale_val = get_scale_value(scale);
 
     for (l, pixel_line) in sprite.lines().enumerate() {
@@ -158,7 +183,15 @@ pub fn draw_pixel<T: PixelBuffer>(buf: &mut T, x: usize, y: usize, rgb: u32) {
     draw_pixel_with_scale(buf, x, y, rgb, PixelScale::X1);
 }
 
-pub fn draw_sprite<T: PixelBuffer>(buf: &mut T, x: usize, y: usize, sprite: &Sprite) {
+pub fn draw_sprite<T: PixelBuffer, const X: usize, const Y: usize>(
+    buf: &mut T,
+    x: usize,
+    y: usize,
+    sprite: &Sprite<{ X }, { Y }>,
+) where
+    [Pixel; X]: LengthAtMost32,
+    [[Pixel; X]; Y]: LengthAtMost32,
+{
     draw_sprite_with_scale(buf, x, y, sprite, PixelScale::X1);
 }
 

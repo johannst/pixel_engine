@@ -1,10 +1,11 @@
-use crate::Pixel::*;
-use crate::Sprite;
-
 use std::collections::HashMap;
 
+use crate::Pixel::*;
+use crate::Sprite;
+type FontSprite = Sprite<8, 8>;
+
 lazy_static! {
-    static ref FONT: HashMap<char, Sprite> = {
+    static ref FONT: HashMap<char, FontSprite> = {
         let mut m = HashMap::new();
         m.insert(
             'A',
@@ -641,7 +642,7 @@ lazy_static! {
     };
 }
 
-pub fn get_sprite(letter: char) -> &'static Sprite {
+pub fn get_sprite(letter: char) -> &'static FontSprite {
     match FONT.get(&letter) {
         Some(s) => s,
         None => {
