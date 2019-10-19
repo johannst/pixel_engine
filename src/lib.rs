@@ -28,6 +28,14 @@ where
     [Pixel; X]: LengthAtMost32,
     [[Pixel; X]; Y]: LengthAtMost32,
 {
+    pub fn width(&self) -> usize {
+        X
+    }
+
+    pub fn height(&self) -> usize {
+        Y
+    }
+
     pub fn lines(&self) -> SpriteLines<'_, { X }, { Y }> {
         SpriteLines {
             sprite: &self,
@@ -173,8 +181,9 @@ pub fn draw_str_with_scale<T: PixelBuffer>(
 
     let mut x_off = 0;
     for c in string.chars() {
-        draw_sprite_with_scale(buf, x + x_off, y, font::get_sprite(c), scale);
-        x_off += 8 * scale_val;
+        let c = font::get_sprite(c);
+        draw_sprite_with_scale(buf, x + x_off, y, c, scale);
+        x_off += c.width() * scale_val;
     }
 }
 
