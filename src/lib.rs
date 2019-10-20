@@ -207,3 +207,11 @@ pub fn draw_sprite<T: PixelBuffer, const X: usize, const Y: usize>(
 pub fn draw_str<T: PixelBuffer>(buf: &mut T, x: usize, y: usize, string: &str) {
     draw_str_with_scale(buf, x, y, string, PixelScale::X1);
 }
+
+pub fn draw_rect<T: PixelBuffer>(buf: &mut T, x: usize, y: usize, w: usize, h: usize, rgb: u32) {
+    for l in 0..h {
+        for c in 0..w {
+            draw_pixel_with_scale(buf, x + c, y + l, rgb, PixelScale::X1);
+        }
+    }
+}
