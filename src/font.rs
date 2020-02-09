@@ -1,640 +1,322 @@
-use crate::Pixel::*;
-use crate::Sprite;
-
+use crate::{Pixel, Sprite};
 use std::collections::HashMap;
+
+macro_rules! sprite_from_bin {
+    ($($bin:expr),+) => {
+        {
+            const WIDTH: usize = 6;
+            const HEIGHT: usize = 12;
+
+            let b2p = |b| if b == 1 { Pixel::C } else { Pixel::U };
+            let mut pixels = Vec::with_capacity(WIDTH * HEIGHT);
+
+            $(
+                for i in 0..WIDTH{
+                    pixels.push(b2p(($bin >> (WIDTH - 1 - i)) & 0x1));
+                }
+            )+
+
+            Sprite::from((pixels, WIDTH))
+        }
+    }
+}
 
 lazy_static! {
     static ref FONT: HashMap<char, Sprite> = {
         let mut m = HashMap::new();
         m.insert(
             'A',
-            Sprite {
-                lines: [
-                    [U, U, U, U, U, U, U, U],
-                    [U, C, C, C, C, C, C, U],
-                    [U, C, U, U, U, U, C, U],
-                    [U, C, U, U, U, U, C, U],
-                    [U, C, C, C, C, C, C, U],
-                    [U, C, U, U, U, U, C, U],
-                    [U, C, U, U, U, U, C, U],
-                    [U, U, U, U, U, U, U, U],
-                ],
-            },
+            sprite_from_bin!(
+                0b000000, 0b000000, 0b011100, 0b100010, 0b100010, 0b100010, 0b111110, 0b100010,
+                0b100010, 0b100010, 0b000000, 0b000000
+            ),
         );
         m.insert(
             'B',
-            Sprite {
-                lines: [
-                    [U, U, U, U, U, U, U, U],
-                    [U, C, C, C, C, C, U, U],
-                    [U, C, U, U, U, U, C, U],
-                    [U, C, C, C, C, C, U, U],
-                    [U, C, U, U, U, U, C, U],
-                    [U, C, U, U, U, U, C, U],
-                    [U, C, C, C, C, C, U, U],
-                    [U, U, U, U, U, U, U, U],
-                ],
-            },
+            sprite_from_bin!(
+                0b000000, 0b000000, 0b111100, 0b100010, 0b100010, 0b111100, 0b100010, 0b100010,
+                0b100010, 0b111100, 0b000000, 0b000000
+            ),
         );
         m.insert(
             'C',
-            Sprite {
-                lines: [
-                    [U, U, U, U, U, U, U, U],
-                    [U, C, C, C, C, C, C, U],
-                    [U, C, U, U, U, U, U, U],
-                    [U, C, U, U, U, U, U, U],
-                    [U, C, U, U, U, U, U, U],
-                    [U, C, U, U, U, U, U, U],
-                    [U, C, C, C, C, C, C, U],
-                    [U, U, U, U, U, U, U, U],
-                ],
-            },
+            sprite_from_bin!(
+                0b000000, 0b000000, 0b011100, 0b100010, 0b100000, 0b100000, 0b100000, 0b100000,
+                0b100010, 0b011100, 0b000000, 0b000000
+            ),
         );
         m.insert(
             'D',
-            Sprite {
-                lines: [
-                    [U, U, U, U, U, U, U, U],
-                    [U, C, C, C, C, C, U, U],
-                    [U, C, U, U, U, U, C, U],
-                    [U, C, U, U, U, U, C, U],
-                    [U, C, U, U, U, U, C, U],
-                    [U, C, U, U, U, U, C, U],
-                    [U, C, C, C, C, C, U, U],
-                    [U, U, U, U, U, U, U, U],
-                ],
-            },
+            sprite_from_bin!(
+                0b000000, 0b000000, 0b111000, 0b100100, 0b100010, 0b100010, 0b100010, 0b100010,
+                0b100100, 0b111000, 0b000000, 0b000000
+            ),
         );
         m.insert(
             'E',
-            Sprite {
-                lines: [
-                    [U, U, U, U, U, U, U, U],
-                    [U, C, C, C, C, C, C, U],
-                    [U, C, U, U, U, U, U, U],
-                    [U, C, C, C, C, C, C, U],
-                    [U, C, U, U, U, U, U, U],
-                    [U, C, U, U, U, U, U, U],
-                    [U, C, C, C, C, C, C, U],
-                    [U, U, U, U, U, U, U, U],
-                ],
-            },
+            sprite_from_bin!(
+                0b000000, 0b000000, 0b111110, 0b100000, 0b100000, 0b111100, 0b100000, 0b100000,
+                0b100000, 0b111110, 0b000000, 0b000000
+            ),
         );
         m.insert(
             'F',
-            Sprite {
-                lines: [
-                    [U, U, U, U, U, U, U, U],
-                    [U, C, C, C, C, C, C, U],
-                    [U, C, U, U, U, U, U, U],
-                    [U, C, C, C, C, C, U, U],
-                    [U, C, U, U, U, U, U, U],
-                    [U, C, U, U, U, U, U, U],
-                    [U, C, U, U, U, U, U, U],
-                    [U, U, U, U, U, U, U, U],
-                ],
-            },
+            sprite_from_bin!(
+                0b000000, 0b000000, 0b111110, 0b100000, 0b100000, 0b111100, 0b100000, 0b100000,
+                0b100000, 0b100000, 0b000000, 0b000000
+            ),
         );
         m.insert(
             'G',
-            Sprite {
-                lines: [
-                    [U, U, U, U, U, U, U, U],
-                    [U, C, C, C, C, C, C, U],
-                    [U, C, U, U, U, U, U, U],
-                    [U, C, U, U, U, U, U, U],
-                    [U, C, U, U, C, C, C, U],
-                    [U, C, U, U, U, U, C, U],
-                    [U, C, C, C, C, C, C, U],
-                    [U, U, U, U, U, U, U, U],
-                ],
-            },
+            sprite_from_bin!(
+                0b000000, 0b000000, 0b011100, 0b100010, 0b100000, 0b100000, 0b101100, 0b100010,
+                0b100010, 0b011100, 0b000000, 0b000000
+            ),
         );
         m.insert(
             'H',
-            Sprite {
-                lines: [
-                    [U, U, U, U, U, U, U, U],
-                    [U, C, U, U, U, U, C, U],
-                    [U, C, U, U, U, U, C, U],
-                    [U, C, U, U, U, U, C, U],
-                    [U, C, C, C, C, C, C, U],
-                    [U, C, U, U, U, U, C, U],
-                    [U, C, U, U, U, U, C, U],
-                    [U, U, U, U, U, U, U, U],
-                ],
-            },
+            sprite_from_bin!(
+                0b000000, 0b000000, 0b100010, 0b100010, 0b100010, 0b100010, 0b111110, 0b100010,
+                0b100010, 0b100010, 0b000000, 0b000000
+            ),
         );
         m.insert(
             'I',
-            Sprite {
-                lines: [
-                    [U, U, U, U, U, U, U, U],
-                    [U, C, C, C, C, C, U, U],
-                    [U, U, U, C, U, U, U, U],
-                    [U, U, U, C, U, U, U, U],
-                    [U, U, U, C, U, U, U, U],
-                    [U, U, U, C, U, U, U, U],
-                    [U, C, C, C, C, C, U, U],
-                    [U, U, U, U, U, U, U, U],
-                ],
-            },
+            sprite_from_bin!(
+                0b000000, 0b000000, 0b011100, 0b001000, 0b001000, 0b001000, 0b001000, 0b001000,
+                0b001000, 0b011100, 0b000000, 0b000000
+            ),
         );
         m.insert(
             'J',
-            Sprite {
-                lines: [
-                    [U, U, U, U, U, U, U, U],
-                    [U, C, C, C, C, C, U, U],
-                    [U, U, U, U, C, U, U, U],
-                    [U, U, U, U, C, U, U, U],
-                    [U, U, U, U, C, U, U, U],
-                    [U, C, U, U, C, U, U, U],
-                    [U, C, C, C, C, U, U, U],
-                    [U, U, U, U, U, U, U, U],
-                ],
-            },
+            sprite_from_bin!(
+                0b000000, 0b000000, 0b001110, 0b000010, 0b000010, 0b000010, 0b000010, 0b100010,
+                0b100010, 0b011000, 0b000000, 0b000000
+            ),
         );
         m.insert(
             'K',
-            Sprite {
-                lines: [
-                    [U, U, U, U, U, U, U, U],
-                    [U, C, U, U, U, C, U, U],
-                    [U, C, U, U, U, C, U, U],
-                    [U, C, C, C, C, U, U, U],
-                    [U, C, U, U, U, C, U, U],
-                    [U, C, U, U, U, C, U, U],
-                    [U, C, U, U, U, C, U, U],
-                    [U, U, U, U, U, U, U, U],
-                ],
-            },
+            sprite_from_bin!(
+                0b000000, 0b000000, 0b100010, 0b100100, 0b101000, 0b110000, 0b110000, 0b101000,
+                0b100100, 0b100010, 0b000000, 0b000000
+            ),
         );
         m.insert(
             'L',
-            Sprite {
-                lines: [
-                    [U, U, U, U, U, U, U, U],
-                    [U, C, U, U, U, U, U, U],
-                    [U, C, U, U, U, U, U, U],
-                    [U, C, U, U, U, U, U, U],
-                    [U, C, U, U, U, U, U, U],
-                    [U, C, U, U, U, U, U, U],
-                    [U, C, C, C, C, C, U, U],
-                    [U, U, U, U, U, U, U, U],
-                ],
-            },
+            sprite_from_bin!(
+                0b000000, 0b000000, 0b100000, 0b100000, 0b100000, 0b100000, 0b100000, 0b100000,
+                0b100000, 0b111110, 0b000000, 0b000000
+            ),
         );
         m.insert(
             'M',
-            Sprite {
-                lines: [
-                    [U, U, U, U, U, U, U, U],
-                    [U, C, U, U, U, C, U, U],
-                    [U, C, C, U, C, C, U, U],
-                    [U, C, U, C, U, C, U, U],
-                    [U, C, U, U, U, C, U, U],
-                    [U, C, U, U, U, C, U, U],
-                    [U, C, U, U, U, C, U, U],
-                    [U, U, U, U, U, U, U, U],
-                ],
-            },
+            sprite_from_bin!(
+                0b000000, 0b000000, 0b100010, 0b110110, 0b101010, 0b101010, 0b100010, 0b100010,
+                0b100010, 0b100010, 0b000000, 0b000000
+            ),
         );
         m.insert(
             'N',
-            Sprite {
-                lines: [
-                    [U, U, U, U, U, U, U, U],
-                    [U, C, U, U, U, U, C, U],
-                    [U, C, C, U, U, U, C, U],
-                    [U, C, U, C, U, U, C, U],
-                    [U, C, U, U, C, U, C, U],
-                    [U, C, U, U, U, C, C, U],
-                    [U, C, U, U, U, U, C, U],
-                    [U, U, U, U, U, U, U, U],
-                ],
-            },
+            sprite_from_bin!(
+                0b000000, 0b000000, 0b100010, 0b100010, 0b110010, 0b101010, 0b100110, 0b100010,
+                0b100010, 0b100010, 0b000000, 0b000000
+            ),
         );
         m.insert(
             'O',
-            Sprite {
-                lines: [
-                    [U, U, U, U, U, U, U, U],
-                    [U, C, C, C, C, C, C, U],
-                    [U, C, U, U, U, U, C, U],
-                    [U, C, U, U, U, U, C, U],
-                    [U, C, U, U, U, U, C, U],
-                    [U, C, U, U, U, U, C, U],
-                    [U, C, C, C, C, C, C, U],
-                    [U, U, U, U, U, U, U, U],
-                ],
-            },
+            sprite_from_bin!(
+                0b000000, 0b000000, 0b011100, 0b100010, 0b100010, 0b100010, 0b100010, 0b100010,
+                0b100010, 0b011100, 0b000000, 0b000000
+            ),
         );
         m.insert(
             'P',
-            Sprite {
-                lines: [
-                    [U, U, U, U, U, U, U, U],
-                    [U, C, C, C, C, C, U, U],
-                    [U, C, U, U, U, U, C, U],
-                    [U, C, C, C, C, C, U, U],
-                    [U, C, U, U, U, U, U, U],
-                    [U, C, U, U, U, U, U, U],
-                    [U, C, U, U, U, U, U, U],
-                    [U, U, U, U, U, U, U, U],
-                ],
-            },
+            sprite_from_bin!(
+                0b000000, 0b000000, 0b111100, 0b100010, 0b100010, 0b100010, 0b111100, 0b100000,
+                0b100000, 0b100000, 0b000000, 0b000000
+            ),
         );
         m.insert(
             'Q',
-            Sprite {
-                lines: [
-                    [U, U, U, U, U, U, U, U],
-                    [U, C, C, C, C, C, C, U],
-                    [U, C, U, U, U, U, C, U],
-                    [U, C, U, U, U, U, C, U],
-                    [U, C, U, U, C, U, C, U],
-                    [U, C, U, U, U, C, C, U],
-                    [U, C, C, C, C, C, C, U],
-                    [U, U, U, U, U, U, U, U],
-                ],
-            },
+            sprite_from_bin!(
+                0b000000, 0b000000, 0b011100, 0b100010, 0b100010, 0b100010, 0b100010, 0b101010,
+                0b011100, 0b000010, 0b000000, 0b000000
+            ),
         );
         m.insert(
             'R',
-            Sprite {
-                lines: [
-                    [U, U, U, U, U, U, U, U],
-                    [U, C, C, C, C, C, U, U],
-                    [U, C, U, U, U, U, C, U],
-                    [U, C, C, C, C, C, U, U],
-                    [U, C, U, U, C, U, U, U],
-                    [U, C, U, U, U, C, U, U],
-                    [U, C, U, U, U, U, C, U],
-                    [U, U, U, U, U, U, U, U],
-                ],
-            },
+            sprite_from_bin!(
+                0b000000, 0b000000, 0b111100, 0b100010, 0b100010, 0b100010, 0b111100, 0b101000,
+                0b100100, 0b100010, 0b000000, 0b000000
+            ),
         );
         m.insert(
             'S',
-            Sprite {
-                lines: [
-                    [U, U, U, U, U, U, U, U],
-                    [U, C, C, C, C, C, C, U],
-                    [U, C, U, U, U, U, U, U],
-                    [U, C, C, C, C, C, C, U],
-                    [U, U, U, U, U, U, C, U],
-                    [U, U, U, U, U, U, C, U],
-                    [U, C, C, C, C, C, C, U],
-                    [U, U, U, U, U, U, U, U],
-                ],
-            },
+            sprite_from_bin!(
+                0b000000, 0b000000, 0b011100, 0b100010, 0b100000, 0b011100, 0b000010, 0b000010,
+                0b100010, 0b011100, 0b000000, 0b000000
+            ),
         );
         m.insert(
             'T',
-            Sprite {
-                lines: [
-                    [U, U, U, U, U, U, U, U],
-                    [U, C, C, C, C, C, C, U],
-                    [U, U, U, U, C, U, U, U],
-                    [U, U, U, U, C, U, U, U],
-                    [U, U, U, U, C, U, U, U],
-                    [U, U, U, U, C, U, U, U],
-                    [U, U, U, U, C, U, U, U],
-                    [U, U, U, U, U, U, U, U],
-                ],
-            },
+            sprite_from_bin!(
+                0b000000, 0b000000, 0b111110, 0b001000, 0b001000, 0b001000, 0b001000, 0b001000,
+                0b001000, 0b001000, 0b000000, 0b000000
+            ),
         );
         m.insert(
             'U',
-            Sprite {
-                lines: [
-                    [U, U, U, U, U, U, U, U],
-                    [U, C, U, U, U, U, C, U],
-                    [U, C, U, U, U, U, C, U],
-                    [U, C, U, U, U, U, C, U],
-                    [U, C, U, U, U, U, C, U],
-                    [U, C, U, U, U, U, C, U],
-                    [U, C, C, C, C, C, C, U],
-                    [U, U, U, U, U, U, U, U],
-                ],
-            },
+            sprite_from_bin!(
+                0b000000, 0b000000, 0b100010, 0b100010, 0b100010, 0b100010, 0b100010, 0b100010,
+                0b100010, 0b011100, 0b000000, 0b000000
+            ),
         );
         m.insert(
             'V',
-            Sprite {
-                lines: [
-                    [U, U, U, U, U, U, U, U],
-                    [U, C, U, U, U, U, C, U],
-                    [U, C, U, U, U, U, C, U],
-                    [U, C, U, U, U, U, C, U],
-                    [U, U, C, U, U, C, U, U],
-                    [U, U, C, U, U, C, U, U],
-                    [U, U, U, C, C, U, U, U],
-                    [U, U, U, U, U, U, U, U],
-                ],
-            },
+            sprite_from_bin!(
+                0b000000, 0b000000, 0b100010, 0b100010, 0b100010, 0b010100, 0b010100, 0b010100,
+                0b001000, 0b001000, 0b000000, 0b000000
+            ),
         );
         m.insert(
             'W',
-            Sprite {
-                lines: [
-                    [U, U, U, U, U, U, U, U],
-                    [U, C, U, U, U, C, U, U],
-                    [U, C, U, U, U, C, U, U],
-                    [U, C, U, U, U, C, U, U],
-                    [U, C, U, C, U, C, U, U],
-                    [U, C, C, U, C, C, U, U],
-                    [U, C, U, U, U, C, U, U],
-                    [U, U, U, U, U, U, U, U],
-                ],
-            },
+            sprite_from_bin!(
+                0b000000, 0b000000, 0b100010, 0b100010, 0b100010, 0b100010, 0b101010, 0b101010,
+                0b110110, 0b100010, 0b000000, 0b000000
+            ),
         );
         m.insert(
             'X',
-            Sprite {
-                lines: [
-                    [U, U, U, U, U, U, U, U],
-                    [U, C, U, U, U, U, C, U],
-                    [U, U, C, U, U, C, U, U],
-                    [U, U, U, C, C, U, U, U],
-                    [U, U, U, C, C, U, U, U],
-                    [U, U, C, U, U, C, U, U],
-                    [U, C, U, U, U, U, C, U],
-                    [U, U, U, U, U, U, U, U],
-                ],
-            },
+            sprite_from_bin!(
+                0b000000, 0b000000, 0b100010, 0b100010, 0b010100, 0b001000, 0b001000, 0b010100,
+                0b100010, 0b100010, 0b000000, 0b000000
+            ),
         );
         m.insert(
             'Y',
-            Sprite {
-                lines: [
-                    [U, U, U, U, U, U, U, U],
-                    [U, C, U, U, U, C, U, U],
-                    [U, U, C, U, C, U, U, U],
-                    [U, U, U, C, U, U, U, U],
-                    [U, U, U, C, U, U, U, U],
-                    [U, U, U, C, U, U, U, U],
-                    [U, U, U, C, U, U, U, U],
-                    [U, U, U, U, U, U, U, U],
-                ],
-            },
+            sprite_from_bin!(
+                0b000000, 0b000000, 0b100010, 0b100010, 0b010100, 0b001000, 0b001000, 0b001000,
+                0b001000, 0b001000, 0b000000, 0b000000
+            ),
         );
         m.insert(
             'Z',
-            Sprite {
-                lines: [
-                    [U, U, U, U, U, U, U, U],
-                    [U, C, C, C, C, C, C, U],
-                    [U, U, U, U, U, C, U, U],
-                    [U, U, U, U, C, U, U, U],
-                    [U, U, U, C, U, U, U, U],
-                    [U, U, C, U, U, U, U, U],
-                    [U, C, C, C, C, C, C, U],
-                    [U, U, U, U, U, U, U, U],
-                ],
-            },
+            sprite_from_bin!(
+                0b000000, 0b000000, 0b111110, 0b000010, 0b000100, 0b001000, 0b010000, 0b100000,
+                0b100000, 0b111110, 0b000000, 0b000000
+            ),
         );
         m.insert(
             '0',
-            Sprite {
-                lines: [
-                    [U, U, U, U, U, U, U, U],
-                    [U, U, C, C, C, C, U, U],
-                    [U, C, U, U, U, C, C, U],
-                    [U, C, U, U, C, U, C, U],
-                    [U, C, U, C, U, U, C, U],
-                    [U, C, C, U, U, U, C, U],
-                    [U, U, C, C, C, C, U, U],
-                    [U, U, U, U, U, U, U, U],
-                ],
-            },
+            sprite_from_bin!(
+                0b000000, 0b000000, 00011100, 0b100010, 0b100110, 0b101010, 0b110010, 0b100010,
+                0b100010, 00011100, 00000000, 00000000
+            ),
         );
         m.insert(
             '1',
-            Sprite {
-                lines: [
-                    [U, U, U, U, U, U, U, U],
-                    [U, U, U, C, C, U, U, U],
-                    [U, U, C, U, C, U, U, U],
-                    [U, U, U, U, C, U, U, U],
-                    [U, U, U, U, C, U, U, U],
-                    [U, U, U, U, C, U, U, U],
-                    [U, U, C, C, C, C, U, U],
-                    [U, U, U, U, U, U, U, U],
-                ],
-            },
+            sprite_from_bin!(
+                0b000000, 0b000000, 0b001000, 0b011000, 0b001000, 0b001000, 0b001000, 0b001000,
+                0b001000, 0b011100, 0b000000, 0b000000
+            ),
         );
         m.insert(
             '2',
-            Sprite {
-                lines: [
-                    [U, U, U, U, U, U, U, U],
-                    [U, U, U, C, C, U, U, U],
-                    [U, U, C, U, U, C, U, U],
-                    [U, U, U, U, C, U, U, U],
-                    [U, U, U, C, U, U, U, U],
-                    [U, U, C, U, U, U, U, U],
-                    [U, U, C, C, C, C, U, U],
-                    [U, U, U, U, U, U, U, U],
-                ],
-            },
+            sprite_from_bin!(
+                0b000000, 0b000000, 0b011100, 0b100010, 0b100010, 0b000100, 0b001000, 0b010000,
+                0b100000, 0b111110, 0b000000, 0b000000
+            ),
         );
         m.insert(
             '3',
-            Sprite {
-                lines: [
-                    [U, U, U, U, U, U, U, U],
-                    [U, U, U, C, C, U, U, U],
-                    [U, U, C, U, U, C, U, U],
-                    [U, U, U, U, C, U, U, U],
-                    [U, U, U, U, U, C, U, U],
-                    [U, U, C, U, U, C, U, U],
-                    [U, U, U, C, C, U, U, U],
-                    [U, U, U, U, U, U, U, U],
-                ],
-            },
+            sprite_from_bin!(
+                0b000000, 0b000000, 0b011100, 0b100010, 0b000010, 0b001100, 0b000010, 0b000010,
+                0b100010, 0b011100, 0b000000, 0b000000
+            ),
         );
         m.insert(
             '4',
-            Sprite {
-                lines: [
-                    [U, U, U, U, U, U, U, U],
-                    [U, U, U, U, C, C, U, U],
-                    [U, U, U, C, U, C, U, U],
-                    [U, U, C, U, U, C, U, U],
-                    [U, C, U, U, U, C, U, U],
-                    [U, C, C, C, C, C, C, U],
-                    [U, U, U, U, U, C, U, U],
-                    [U, U, U, U, U, U, U, U],
-                ],
-            },
+            sprite_from_bin!(
+                0b000000, 0b000000, 0b000010, 0b000110, 0b001010, 0b010010, 0b100010, 0b111110,
+                0b000010, 0b000010, 0b000000, 0b000000
+            ),
         );
         m.insert(
             '5',
-            Sprite {
-                lines: [
-                    [U, U, U, U, U, U, U, U],
-                    [U, U, C, C, C, C, U, U],
-                    [U, U, C, U, U, U, U, U],
-                    [U, U, C, C, C, U, U, U],
-                    [U, U, U, U, U, C, U, U],
-                    [U, U, U, U, U, C, U, U],
-                    [U, U, C, C, C, U, U, U],
-                    [U, U, U, U, U, U, U, U],
-                ],
-            },
+            sprite_from_bin!(
+                0b000000, 0b000000, 0b111110, 0b100000, 0b100000, 0b111100, 0b000010, 0b000010,
+                0b100010, 0b011100, 0b000000, 0b000000
+            ),
         );
         m.insert(
             '6',
-            Sprite {
-                lines: [
-                    [U, U, U, U, U, U, U, U],
-                    [U, U, U, C, C, C, U, U],
-                    [U, U, C, U, U, U, U, U],
-                    [U, U, C, C, C, U, U, U],
-                    [U, U, C, U, U, C, U, U],
-                    [U, U, C, U, U, C, U, U],
-                    [U, U, U, C, C, U, U, U],
-                    [U, U, U, U, U, U, U, U],
-                ],
-            },
+            sprite_from_bin!(
+                0b000000, 0b000000, 0b011100, 0b100000, 0b100000, 0b111100, 0b100010, 0b100010,
+                0b100010, 0b011100, 0b000000, 0b000000
+            ),
         );
         m.insert(
             '7',
-            Sprite {
-                lines: [
-                    [U, U, U, U, U, U, U, U],
-                    [U, U, C, C, C, C, U, U],
-                    [U, U, U, U, U, C, U, U],
-                    [U, U, U, U, C, U, U, U],
-                    [U, U, U, U, C, U, U, U],
-                    [U, U, U, C, U, U, U, U],
-                    [U, U, C, U, U, U, U, U],
-                    [U, U, U, U, U, U, U, U],
-                ],
-            },
+            sprite_from_bin!(
+                0b000000, 0b000000, 0b111110, 0b000010, 0b000010, 0b000100, 0b000100, 0b001000,
+                0b001000, 0b001000, 0b000000, 0b000000
+            ),
         );
         m.insert(
             '8',
-            Sprite {
-                lines: [
-                    [U, U, U, U, U, U, U, U],
-                    [U, U, C, C, C, C, U, U],
-                    [U, C, U, U, U, U, C, U],
-                    [U, C, C, C, C, C, C, U],
-                    [U, C, U, U, U, U, C, U],
-                    [U, C, U, U, U, U, C, U],
-                    [U, U, C, C, C, C, U, U],
-                    [U, U, U, U, U, U, U, U],
-                ],
-            },
+            sprite_from_bin!(
+                0b000000, 0b000000, 0b011100, 0b100010, 0b100010, 0b011100, 0b100010, 0b100010,
+                0b100010, 0b011100, 0b000000, 0b000000
+            ),
         );
         m.insert(
             '9',
-            Sprite {
-                lines: [
-                    [U, U, U, U, U, U, U, U],
-                    [U, U, U, C, C, U, U, U],
-                    [U, U, C, U, U, C, U, U],
-                    [U, U, C, U, U, C, U, U],
-                    [U, U, U, C, C, C, U, U],
-                    [U, U, U, U, U, C, U, U],
-                    [U, U, C, C, C, U, U, U],
-                    [U, U, U, U, U, U, U, U],
-                ],
-            },
+            sprite_from_bin!(
+                0b000000, 0b000000, 0b011100, 0b100010, 0b100010, 0b100010, 0b011110, 0b000010,
+                0b000010, 0b011100, 0b000000, 0b000000
+            ),
         );
         m.insert(
             ' ',
-            Sprite {
-                lines: [
-                    [U, U, U, U, U, U, U, U],
-                    [U, U, U, U, U, U, U, U],
-                    [U, U, U, U, U, U, U, U],
-                    [U, U, U, U, U, U, U, U],
-                    [U, U, U, U, U, U, U, U],
-                    [U, U, U, U, U, U, U, U],
-                    [U, U, U, U, U, U, U, U],
-                    [U, U, U, U, U, U, U, U],
-                ],
-            },
+            sprite_from_bin!(
+                0b000000, 0b000000, 0b000000, 0b000000, 0b000000, 0b000000, 0b000000, 0b000000,
+                0b000000, 0b000000, 0b000000, 0b000000
+            ),
         );
         m.insert(
             ',',
-            Sprite {
-                lines: [
-                    [U, U, U, U, U, U, U, U],
-                    [U, U, U, U, U, U, U, U],
-                    [U, U, U, U, U, U, U, U],
-                    [U, U, U, U, U, U, U, U],
-                    [U, U, U, U, C, U, U, U],
-                    [U, U, U, U, C, U, U, U],
-                    [U, U, U, C, U, U, U, U],
-                    [U, U, U, U, U, U, U, U],
-                ],
-            },
+            sprite_from_bin!(
+                0b000000, 0b000000, 0b000000, 0b000000, 0b000000, 0b000000, 0b000000, 0b000100,
+                0b000100, 0b001000, 0b000000, 0b000000
+            ),
         );
         m.insert(
             ':',
-            Sprite {
-                lines: [
-                    [U, U, U, U, U, U, U, U],
-                    [U, U, U, C, C, U, U, U],
-                    [U, U, U, C, C, U, U, U],
-                    [U, U, U, U, U, U, U, U],
-                    [U, U, U, U, U, U, U, U],
-                    [U, U, U, C, C, U, U, U],
-                    [U, U, U, C, C, U, U, U],
-                    [U, U, U, U, U, U, U, U],
-                ],
-            },
+            sprite_from_bin!(
+                0b000000, 0b000000, 0b000000, 0b000000, 0b001000, 0b001000, 0b000000, 0b000000,
+                0b001000, 0b001000, 0b000000, 0b000000
+            ),
         );
         m.insert(
             '-',
-            Sprite {
-                lines: [
-                    [U, U, U, U, U, U, U, U],
-                    [U, U, U, U, U, U, U, U],
-                    [U, U, U, U, U, U, U, U],
-                    [U, U, C, C, C, C, U, U],
-                    [U, U, U, U, U, U, U, U],
-                    [U, U, U, U, U, U, U, U],
-                    [U, U, U, U, U, U, U, U],
-                    [U, U, U, U, U, U, U, U],
-                ],
-            },
+            sprite_from_bin!(
+                0b000000, 0b000000, 0b000000, 0b000000, 0b000000, 0b000000, 0b111110, 0b000000,
+                0b000000, 0b000000, 0b000000, 0b000000
+            ),
         );
         m.insert(
             '[',
-            Sprite {
-                lines: [
-                    [U, U, U, U, U, U, U, U],
-                    [U, U, U, C, C, U, U, U],
-                    [U, U, U, C, U, U, U, U],
-                    [U, U, U, C, U, U, U, U],
-                    [U, U, U, C, U, U, U, U],
-                    [U, U, U, C, U, U, U, U],
-                    [U, U, U, C, C, U, U, U],
-                    [U, U, U, U, U, U, U, U],
-                ],
-            },
+            sprite_from_bin!(
+                0b000000, 0b000000, 0b011100, 0b010000, 0b010000, 0b010000, 0b010000, 0b010000,
+                0b010000, 0b011100, 0b000000, 0b000000
+            ),
         );
         m.insert(
             ']',
-            Sprite {
-                lines: [
-                    [U, U, U, U, U, U, U, U],
-                    [U, U, C, C, U, U, U, U],
-                    [U, U, U, C, U, U, U, U],
-                    [U, U, U, C, U, U, U, U],
-                    [U, U, U, C, U, U, U, U],
-                    [U, U, U, C, U, U, U, U],
-                    [U, U, C, C, U, U, U, U],
-                    [U, U, U, U, U, U, U, U],
-                ],
-            },
+            sprite_from_bin!(
+                0b000000, 0b000000, 0b011100, 0b000100, 0b000100, 0b000100, 0b000100, 0b000100,
+                0b000100, 0b011100, 0b000000, 0b000000
+            ),
         );
 
         m

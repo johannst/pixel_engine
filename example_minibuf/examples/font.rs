@@ -18,20 +18,18 @@ fn main() {
     });
 
     let mut buf = pixel_engine::PixelVec::new(WIDTH, HEIGHT);
-    for y in 0..100 {
-        for x in 0..100 {
-            pixel_engine::draw_pixel(&mut buf, x, y, 0x00ffffff);
-        }
-    }
-    pixel_engine::draw_sprite(&mut buf, 200, 200, pixel_engine::font::get_sprite('D'));
-    pixel_engine::draw_str(&mut buf, 100, 300, "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
-    pixel_engine::draw_str_with_scale(
+    pixel_engine::draw_str_scaled(
         &mut buf,
-        100,
-        330,
-        "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+        10,
+        10,
+        0x00ffffff,
+        "PRESS [ESC] TO QUIT",
         pixel_engine::PixelScale::X2,
     );
+    pixel_engine::draw_str(&mut buf, 10, 50, 0x00ffffff, "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+    pixel_engine::draw_str(&mut buf, 10, 60, 0x00ff0000, "RED");
+    pixel_engine::draw_str(&mut buf, 10, 70, 0x0000ff00, "GREEN");
+    pixel_engine::draw_str(&mut buf, 10, 80, 0x000000ff, "BLUE");
 
     window.update_with_buffer(buf.buffer()).unwrap();
     while window.is_open() && !window.is_key_down(Key::Escape) {
